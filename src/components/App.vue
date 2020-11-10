@@ -59,6 +59,12 @@ export default {
       textFieldValue: "",
     };
   },
+  updated: function(){
+    alert('updating')
+    this.$nextTick(()=>{
+      alert('updated')
+    })
+  },
   methods: {
     onItemTap: function (args) {},
     onAdd: function () {
