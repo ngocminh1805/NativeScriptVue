@@ -60,6 +60,12 @@ export default {
     };
   },
   methods: {
+    updated: function(){
+    alert('updating')
+    this.$nextTick(()=>{
+      alert('updated')
+    })
+  },
     onItemTap: function(args) {},
     onAdd: function() {
       this.countries.push({ text: this.textFieldValue });

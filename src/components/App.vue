@@ -56,7 +56,6 @@ export default {
       textFieldValue: "",
     };
   },
-  methods: {},
 };
 </script>
 
