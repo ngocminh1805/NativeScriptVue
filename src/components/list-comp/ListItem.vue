@@ -16,3 +16,23 @@ export default {
     props: ['item']
 }
 </script>
+
+<style scoped>
+.button_item {
+  height: 30;
+  width: 30;
+  color: #53ba82;
+  background-color: #ffffff;
+  border-radius: 20;
+}
+
+.item_container {
+  display: flex;
+  flex-direction: row;
+}
+
+.item_title {
+  width: 65%;
+  color: #ffffff;
+}
+</style>

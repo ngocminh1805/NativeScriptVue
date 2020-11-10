@@ -1,51 +1,48 @@
+// view component
 <template>
   <Page>
-    <ActionBar>
-      <GridLayout width="100%" columns="auto, *">
-        <Label
-          text="MENU"
-          @tap="$refs.drawer.nativeView.showDrawer()"
-          col="0"
-        />
-        <Label class="title" text="Welcome to NativeScript-Vue!" col="1" />
-      </GridLayout>
-    </ActionBar>
-    <RadSideDrawer ref="drawer">
-      <StackLayout ~drawerContent backgroundColor="#ffffff">
-        <Label class="drawer-header" text="Drawer" />
-
-        <Label class="drawer-item" text="Item 1" />
-        <Label class="drawer-item" text="Item 2" />
-        <Label class="drawer-item" text="Item 3" />
-      </StackLayout>
-    </RadSideDrawer>
-    <StackLayout>
-      <StackLayout class="input_container" orientation="horizontal">
-        <TextField
-          :text="textFieldValue"
-          hint="Enter text..."
-          @textChange="onTextChange"
-          class="input_text"
-          id="input_text"
-          @blur="onTextBlur"
-          (load)="loadedField($event)"
-        />
-        <Button text="+" @tap="onAdd" class="button_item" />
-      </StackLayout>
-      <ListView for="item in countries" @itemTap="onItemTap">
-        <v-template>
-          <ListItem v-bind:item="item" v-on:on-button-tap="onButtonTap" />
-        </v-template>
-      </ListView>
-    </StackLayout>
+    <!-- <StackLayout >
+      <Home/> -->
+      <BottomNavigation
+        id="bottomNav"
+        class="bottomNav"
+        automationText="tabNavigation"
+        selectedIndex="0"
+        selectedIndexChanged="onSelectedIndexChanged"
+      >
+        <TabStrip>
+          <TabStripItem>
+            <Label text="Home"></Label>
+          </TabStripItem>
+          <TabStripItem>
+            <Label text="Screen 1"></Label>
+          </TabStripItem>
+          <TabStripItem>
+            <Label text="Screen 2"></Label>
+          </TabStripItem>
+        </TabStrip>
+        <TabContentItem>
+          <Frame id="featured" defaultPage="home"></Frame>
+        </TabContentItem>
+        <TabContentItem>
+          <Frame id="browse" defaultPage="screen1"></Frame>
+        </TabContentItem>
+        <TabContentItem>
+          <Frame id="search" defaultPage="screen2"></Frame>
+        </TabContentItem>
+      </BottomNavigation>
+    <!-- </StackLayout> -->
   </Page>
 </template>
 
+// script - logic
+
 <script lang="ts">
-import ListItem from "@/components/list-comp/ListItem.vue";
+// import ListItem from "@/components/list-comp/ListItem.vue";
+import Home from "@/components/home.vue";
 
 export default {
-  components: { ListItem },
+  components: { Home },
   data() {
     return {
       msg: "Hello World!",
@@ -59,33 +56,11 @@ export default {
       textFieldValue: "",
     };
   },
-  methods: {
-    onItemTap: function (args) {},
-    onAdd: function () {
-      this.countries.push({ text: this.textFieldValue });
-    },
-    onButtonTap: function (args) {
-      const text = args.object.text;
-      if(text === 'x'){
-        //asking for delete or not
-        confirm('Có chắc là xóa hay không?')
-      }
-      if(text === 'E'){
-        //to edit page
-      }
-    },
-    onTextBlur: function (args) {
-      this.textFieldValue = args.value;
-    },
-    loadedField(args) {
-      var textfield = args.object;
-      setTimeout(function() {
-          textfield.dismissSoftInput();
-      }, 200);
-    },
-  },
+  methods: {},
 };
 </script>
+
+// css - style of component
 
 <style scoped>
 ActionBar {
@@ -119,23 +94,6 @@ ActionBar {
   font-size: 16;
 }
 
-.item_container {
-  display: flex;
-  flex-direction: row;
-}
-
-.item_title {
-  width: 65%;
-  color: #ffffff;
-}
-.button_item {
-  height: 30;
-  width: 30;
-  color: #53ba82;
-  background-color: #ffffff;
-  border-radius: 20;
-}
-
 .input_container {
   display: flex;
   flex-direction: row;
@@ -147,5 +105,18 @@ ActionBar {
 .listview {
   width: 100%;
   background: #ffffff;
+}
+
+.button_item {
+  height: 30;
+  width: 30;
+  color: #53ba82;
+  background-color: #ffffff;
+  border-radius: 20;
+}
+
+.bottomNav{
+  position: absolute;
+  /* bottom: 0; */
 }
 </style>
