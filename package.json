@@ -14,10 +14,7 @@
     "nativescript-ui-sidedrawer": "^9.0.0",
     "nativescript-vue": "^2.8.1",
     "nativescript-vue-devtools": "^1.4.0",
-<<<<<<< HEAD
-=======
     "tns-core-modules": "^6.5.21",
->>>>>>> 808bbd9c090af17f2a00ec66ae2b6a841fe3d4fb
     "vuex": "^3.5.1"
   },
   "devDependencies": {
