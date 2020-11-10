@@ -19,22 +19,22 @@
         <Label class="drawer-item" text="Item 3" />
       </StackLayout>
     </RadSideDrawer>
-    <StackLayout >
+    <StackLayout>
       <StackLayout class="input_container" orientation="horizontal">
-        <TextField :text ="textFieldValue" hint="Enter text..." @textChange="onTextChange" class="input_text"  id = "input_text"/>
-         <Button text="+" @tap="onAdd" class="button_item" />
+        <TextField
+          :text="textFieldValue"
+          hint="Enter text..."
+          @textChange="onTextChange"
+          class="input_text"
+          id="input_text"
+          @blur="onTextBlur"
+          (load)="loadedField($event)"
+        />
+        <Button text="+" @tap="onAdd" class="button_item" />
       </StackLayout>
       <ListView for="item in countries" @itemTap="onItemTap">
         <v-template>
-          <StackLayout
-            orientation="horizontal"
-            backgroundColor="#3c495e"
-            class="item_container"
-          >
-            <Label :text="item.text" flex="1" class="item_title" />
-            <Button text="x" @tap="onButtonTap" class="button_item" />
-            <Button text="E" @tap="onButtonTap" class="button_item" />
-          </StackLayout>
+          <ListItem v-bind:item="item" v-on:on-button-tap="onButtonTap" />
         </v-template>
       </ListView>
     </StackLayout>
@@ -42,7 +42,10 @@
 </template>
 
 <script lang="ts">
+import ListItem from "@/components/list-comp/ListItem.vue";
+
 export default {
+  components: { ListItem },
   data() {
     return {
       msg: "Hello World!",
@@ -53,24 +56,33 @@ export default {
         { text: "countries 4" },
         { text: "countries 5" },
       ],
-      textFieldValue : ''
-      
+      textFieldValue: "",
     };
   },
   methods: {
-    onItemTap: function(args) {},
-    onAdd: function() {
-      
-        this.countries.push({text:this.textFieldValue})
-        
-        
+    onItemTap: function (args) {},
+    onAdd: function () {
+      this.countries.push({ text: this.textFieldValue });
     },
-    onButtonTap: function () {
-
+    onButtonTap: function (args) {
+      const text = args.object.text;
+      if(text === 'x'){
+        //asking for delete or not
+        confirm('Có chắc là xóa hay không?')
+      }
+      if(text === 'E'){
+        //to edit page
+      }
     },
-    onTextChange: function (args) {
-        this.textFieldValue = args.value
-    }
+    onTextBlur: function (args) {
+      this.textFieldValue = args.value;
+    },
+    loadedField(args) {
+      var textfield = args.object;
+      setTimeout(function() {
+          textfield.dismissSoftInput();
+      }, 200);
+    },
   },
 };
 </script>
@@ -124,13 +136,13 @@ ActionBar {
   border-radius: 20;
 }
 
-.input_container{
-    display: flex;
-    flex-direction: row;
-    padding: 10;
+.input_container {
+  display: flex;
+  flex-direction: row;
+  padding: 10;
 }
-.input_text{
-    width: 75%;
+.input_text {
+  width: 75%;
 }
 .listview {
   width: 100%;
