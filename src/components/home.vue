@@ -1,24 +1,6 @@
 <template>
   <Page class="page">
-    <ActionBar>
-      <GridLayout width="100%" columns="auto, *">
-        <Label
-          text="MENU"
-          @tap="$refs.drawer.nativeView.showDrawer()"
-          col="0"
-        />
-        <Label class="title" text="Welcome to NativeScript-Vue!" col="1" />
-      </GridLayout>
-    </ActionBar>
-    <RadSideDrawer ref="drawer">
-      <StackLayout ~drawerContent backgroundColor="#ffffff">
-        <Label class="drawer-header" text="Drawer" />
-
-        <Label class="drawer-item" text="Item 1" />
-        <Label class="drawer-item" text="Item 2" />
-        <Label class="drawer-item" text="Item 3" />
-      </StackLayout>
-    </RadSideDrawer>
+    <ActionBar title="Home"></ActionBar>
     <StackLayout>
       <StackLayout class="input_container" orientation="horizontal">
         <TextField
@@ -34,15 +16,25 @@
       </StackLayout>
       <ListView for="item in countries" @itemTap="onItemTap">
         <v-template>
-          <ListItem v-bind:item="item" v-on:on-button-tap="onButtonTap" />
+          <!-- <ListItem v-bind:item="item" v-on:on-delete="onButtonTap(item)" /> -->
+          <StackLayout
+            orientation="horizontal"
+            backgroundColor="#3c495e"
+            class="item_container"
+          >
+            <Label :text="item.text" flex="1" class="item_title" />
+            <Button text="x" @tap="onDelete(item)" class="button_item" />
+            <Button text="E" @tap="onEdit(item)" class="button_item" />
+          </StackLayout>
         </v-template>
       </ListView>
     </StackLayout>
   </Page>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import ListItem from "@/components/list-comp/ListItem.vue";
+import Edit from "@/components/edit.vue";
 
 export default {
   components: { ListItem },
@@ -60,6 +52,7 @@ export default {
     };
   },
   methods: {
+
     updated: function(){
     alert('updating')
     this.$nextTick(()=>{
@@ -67,19 +60,55 @@ export default {
     })
   },
     onItemTap: function(args) {},
+
     onAdd: function() {
       this.countries.push({ text: this.textFieldValue });
+      
     },
-    onButtonTap: function(args) {
-      const text = args.object.text;
-      if (text === "x") {
-        //asking for delete or not
-        confirm("Có chắc là xóa hay không?");
-      }
-      if (text === "E") {
-        //to edit page
-      }
+
+    // onButtonTap: function(args) {
+    //   const text = args.object.text;
+    //   // console.log('Event', args);
+    //   // console.log('confirm', );
+
+    //   if (text === "x") {
+    //     // asking for delete or not
+
+
+    //   }
+    //   if (text === "E") {
+    //     //to edit page
+
+
+    //   }
+    // },
+    //ondelete
+    onDelete: function (item) {
+      // confirm("Có chắc là xóa hay không?")
+           const index = this.countries.indexOf(item)
+           this.countries.splice(index,1)
     },
+    //onedit
+    onEdit: function (item) {
+      //  this.$navigateTo(Edit,{props:{
+      //    item: item.text
+      //  }})
+      const index = this.countries.indexOf(item)
+      const dialogs = require('tns-core-modules/ui/dialogs')
+
+      prompt({
+        title: "Edit Todo",
+        message: "Nhập chỉnh sửa:",
+        okButtonText: "Edit",
+        cancelButtonText: "Cancel",
+        defaultText: item.text,
+        inputType: dialogs.inputType.text
+      }).then(result => {
+        // console.log(`Dialog result: ${result.result}, text: ${result.text}`)
+        this.countries.splice(index,1,{text:result.text})
+      });
+    },
+
 
     // on text blur
     onTextBlur: function(args) {
@@ -87,7 +116,6 @@ export default {
     },
 
     // on text change
-
     onTextChange: function(args) {
       this.textFieldValue = args.value;
     },
@@ -155,5 +183,23 @@ ActionBar {
   background-color: #ffffff;
   border-radius: 20;
 }
-</style>
+.item_container {
+  display: flex;
+  flex-direction: row;
+}
 
+.item_title {
+  width: 65%;
+  color: #ffffff;
+}
+.route_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: auto;
+}
+.route_btn {
+  background-color: #53ba82;
+  color: #ffffff;
+}
+</style>
