@@ -10,7 +10,7 @@
         <v-template>
           <StackLayout orientation="horizontal">
             <StackLayout width="70%">
-              <Label :text="index" class="news_title" />
+              <Label :text="index" class="news_title"/>
               <Label :text="item.author" class="news_author" />
               <Label :text="item.url" maxLength="100" />
             </StackLayout>
@@ -30,6 +30,7 @@ export default {
   data() {
     return {
       position: 0,
+      page: 0,
       news:[]
     //   news: [
     //   {title:'News 1', author: "Minh Bé Tí", content: "What happened \r\nChinese internet stocks were hit hard on Tuesday. By the close of trading in the U.S., shares of Alibaba Group (NYSE:BABA), Tencent Holdings(OTC:TCEHY), and JD.com(NASDAQ:JD) were dow… [+1201 chars]", img: "https://picsum.photos/200/300?random=1"},
@@ -67,7 +68,10 @@ export default {
     getData: function () {
     //   alert('get data');
       const httpModule = require("tns-core-modules/http");
-      httpModule.getJSON("https://picsum.photos/v2/list?page=2&limit=100")
+
+      this.page ++ ;
+
+      httpModule.getJSON("https://picsum.photos/v2/list?page="+this.page.toString()+"&limit=50")
       .then((r) => {
           console.log('RESPONSE',r);
           this.news = this.news.concat(r)
@@ -91,7 +95,7 @@ export default {
         var str = url.slice(0,index)
 
         str = str.concat(""+id+"/200")
-        // console.log('URL',str);
+         console.log('URL',str);
 
         return str;
     },
@@ -134,6 +138,4 @@ ActionBar {
   color: #53ba82;
 }
 
-.news_content {
-}
 </style>
