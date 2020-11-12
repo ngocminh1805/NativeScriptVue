@@ -1,9 +1,31 @@
 // view component
 <template>
-  <Page>
-    <StackLayout class="container">
+  <Page actionBarHidden="true">
+    <!-- <StackLayout class="container">
       <Home/>
-    </StackLayout>
+    </StackLayout> -->
+     <BottomNavigation>
+      <TabStrip>
+        <TabStripItem>
+          <Label text="Home"></Label>
+        </TabStripItem>
+        <TabStripItem>
+          <Label text="News"></Label>
+        </TabStripItem>
+      </TabStrip>
+
+      <TabContentItem>
+        <Frame id="homeTabFrame">
+          <Home/>
+        </Frame>
+      </TabContentItem>
+      <TabContentItem>
+        <Frame id="newsTabFrame">
+          <News/>
+        </Frame>
+      </TabContentItem>
+
+    </BottomNavigation>
   </Page>
 </template>
 
@@ -12,20 +34,13 @@
 <script lang="ts">
 import Vue from "nativescript-vue";
 import Home from "@/components/home.vue";
+import News from "@/components/news.vue"
 
 export default {
-  components: { Home },
+  components: { Home , News},
   data() {
     return {
-      msg: "Hello World!",
-      countries: [
-        { text: "countries 1" },
-        { text: "countries 2" },
-        { text: "countries 3" },
-        { text: "countries 4" },
-        { text: "countries 5" },
-      ],
-      textFieldValue: "",
+    
     };
   },
 };
@@ -38,6 +53,12 @@ ActionBar {
   background-color: #53ba82;
   color: #ffffff;
 }
+BottomNavigation{
+  background-color: #53ba82;
+  color: #ffffff;
+}
+
+
 
 .container{
   display: flex;

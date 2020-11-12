@@ -98,7 +98,7 @@ export default {
 
       prompt({
         title: "Edit Todo",
-        message: "Nhập chỉnh sửa:",
+        // message: "Nhập chỉnh sửa:",
         okButtonText: "Edit",
         cancelButtonText: "Cancel",
         defaultText: item.text,
