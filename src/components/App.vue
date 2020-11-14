@@ -12,6 +12,9 @@
         <TabStripItem>
           <Label text="News"></Label>
         </TabStripItem>
+         <TabStripItem>
+          <Label text="Images"></Label>
+        </TabStripItem>
       </TabStrip>
 
       <TabContentItem>
@@ -22,6 +25,11 @@
       <TabContentItem>
         <Frame id="newsTabFrame">
           <News/>
+        </Frame>
+      </TabContentItem>
+      <TabContentItem>
+        <Frame id="imagesTabFrame">
+          <Images/>
         </Frame>
       </TabContentItem>
 
@@ -35,9 +43,10 @@
 import Vue from "nativescript-vue";
 import Home from "@/components/home.vue";
 import News from "@/components/news.vue"
+import Images from "@/components/images.vue"
 
 export default {
-  components: { Home , News},
+  components: { Home , News,Images},
   data() {
     return {
     
